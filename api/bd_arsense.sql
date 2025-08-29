@@ -24,28 +24,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `categoria`
+-- Estrutura para tabela `cliente`
 --
 
-CREATE TABLE `categoria` (
+CREATE TABLE `cliente` (
   `id` int NOT NULL,
-  `tipo` varchar(50) DEFAULT NULL,
-  `icone` varchar(255) DEFAULT NULL,
-  `data_cadastro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `data_alteracao` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `nome` varchar(50) DEFAULT NULL,
+  `sobre_nome` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `telefone` float DEFAULT NULL,
+  `senha` varchar(100) DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Despejando dados para a tabela `categoria`
+-- Despejando dados para a tabela `cliente`
 --
 
-INSERT INTO `categoria` (`id`, `tipo`, `icone`, `data_cadastro`, `data_alteracao`) VALUES
-(1, 'Sedan', 'icone_sedan.png', '2023-04-26 16:35:16', '2023-04-26 16:35:16'),
-(2, 'Hatch', 'icone_hatch.png', '2023-04-26 16:35:16', '2023-04-26 16:35:16'),
-(3, 'Perua', 'icone_perua.png', '2023-04-26 16:35:16', '2023-04-26 16:35:16'),
-(4, 'SUVs', 'icone_suvs.png', '2023-04-26 16:35:16', '2023-04-26 16:51:52'),
-(5, 'Conversível', 'icone_conversivel.png', '2023-04-26 16:35:16', '2023-04-26 16:35:16'),
-(6, 'Esport', 'logo_esport.png', '2023-05-04 01:28:10', '2023-05-04 01:30:36');
+INSERT INTO `cliente` (`id`, `nome`,  `sobre_nome`, `email`, `telefone`, `senha`) VALUES
+(1, 'Juan', 'Trovo', 'juantrovo@gmail.com', '11994126752', '260607'),
+(2, 'Maria', 'Oliveira', 'maria.oliveira@example.com', '234567890', 'senha456'),
+(3, 'Pedro', 'Costa', 'pedro.costa@example.com', '345678901', 'senha789'),
+(4, 'Ana', 'Pereira', 'ana.pereira@example.com', '456789012', 'senha012'),
+(5, 'Lucas', 'Santos', 'lucas.santos@example.com', '567890123', 'senha345'),
+(6, 'Camila', 'Lima', 'camila.lima@example.com', '678901234', 'senha678'),
+(7, 'Rafael', 'Souza', 'rafael.souza@example.com', '789012345', 'senha901'),
+(8, 'Juliana', 'Almeida', 'juliana.almeida@example.com', '890123456', 'senha234'),
+(9, 'Felipe', 'Gomes', 'felipe.gomes@example.com', '901234567', 'senha567'),
+(10, 'Beatriz', 'Mendes', 'beatriz.mendes@example.com', '012345678', 'senha890');
 
 -- --------------------------------------------------------
 
