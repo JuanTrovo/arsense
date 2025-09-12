@@ -5,7 +5,7 @@ dotenv.config();
 const developmentConfig = {
     host: "db",
     port: 3306,
-    name: "l_v",
+    name: "bd_arsense",
     dialect: "mysql",
     user: "root",
     password: "root"
