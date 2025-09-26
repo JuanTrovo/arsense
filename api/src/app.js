@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
             usuario: {
                 'POST - Cadastrar usuário': `${rootDomain}/api/usuario`,
                 'GET - Consultar todos os usuários': `${rootDomain}/api/usuario`,
+                'GET - Consultar por email': `${rootDomain}/api/usuario`,
                 'GET - Consultar usuário por ID': `${rootDomain}/api/usuario/:id`,
                 'PUT - Alterar usuário': `${rootDomain}/api/usuario/:id`,
                 'DELETE - Deletar usuário': `${rootDomain}/api/usuario/:id`,

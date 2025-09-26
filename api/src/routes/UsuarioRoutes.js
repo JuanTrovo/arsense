@@ -9,6 +9,9 @@ router.post("/", UsuarioController.cadastrar);
 // Rota para consultar todos os usuários (pode usar ?search=nome/email)
 router.get("/", UsuarioController.consultarTodos);
 
+// Rota para consultar usuário por Email
+router.get("/", UsuarioController.consultarPorEmail);
+
 // Rota para consultar usuário por ID
 router.get("/:id", UsuarioController.consultarPorID);
 

@@ -32,6 +32,43 @@ export const cadastrar = async (req, res) => {
     }
 };
 
+
+export const consultarPorEmail = async (req, res) => {
+    try {
+        const { email } = req.params;
+
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: "O email precisa ser informado"
+            });
+        }
+
+        const usuario = await Usuario.consultarPorEmail(email);
+
+        if (!usuario) {
+            return res.status(404).json({
+                success: false,
+                message: "Usuário não encontrado"
+            });
+        }
+
+        // não retorna a senha
+        usuario.senha = undefined;
+
+        res.status(200).json({
+            success: true,
+            data: usuario
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Erro ao consultar usuário por email",
+            error: error.message
+        });
+    }
+};
+
 // ==================================================
 // LISTAR TODOS
 // ==================================================

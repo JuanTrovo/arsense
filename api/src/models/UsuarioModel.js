@@ -1,140 +1,106 @@
-
-import bycrypt from 'bcryptjs';
 import pool from "../database/data.js";
 
-export const cadastrar = async (usuario, cx = null) => {    
-    let cxLocal = cx;
-    if (!cxLocal) {
-        // Obter uma conexão do pool se não foi fornecida (se é null)
-        cxLocal = await pool.getConnection(); 
-    }
-
+// Cadastrar usuário
+export const cadastrar = async (usuario) => {
+    const cx = await pool.getConnection();
     try {
-        // Desestruturar o objeto usuario
-        const { nome, email, senha, tipo_usuario, data_criacao} = usuario; 
+        const { nome, email, senha, tipo_usuario, data_criacao } = usuario;
 
-        const usuarioExistente = await consultarPorEmail(email, cxLocal);
-
-        if (usuarioExistente) {
+        // Verifica se email já existe
+        const [existe] = await cx.query("SELECT * FROM usuario WHERE email = ?", [email]);
+        if (existe.length > 0) {
             throw new Error("Email já cadastrado");
         }
 
-        // Hash da senha
-        const salt = bycrypt.genSaltSync(10);
-        const hashSenha = bycrypt.hashSync(senha, salt);
+        const query = `
+            INSERT INTO usuario (nome, email, senha, tipo_usuario, data_criacao) 
+            VALUES (?, ?, ?, ?, ?)
+        `;
+        const [result] = await cx.query(query, [nome, email, senha, tipo_usuario, data_criacao]);
 
-        // Query para inserir um novo usuário
-        const query = `INSERT INTO Usuario (nome, email, senha, tipo_usuario, data_criacao) VALUES (?, ?, ?, ?, ?)`;
-
-        // Executar a query com os valores do usuário
-        const [result] = await cx.query(query,[nome, email, hashSenha, tipo_usuario, data_criacao]);
-    
-        // Verificar se a inserção foi bem-sucedida
-        if (result.affectedRows === 0) {
-            throw new Error("Erro ao cadastrar usuário");
-        } 
-        // Retornar o ID do usuário inserido
-        const usuarioCadastrado = await consultarPorId(result.insertId, cxLocal);
-        usuarioCadastrado.senha = undefined;
-        return usuarioCadastrado;
-    } catch (error) {
-        // Lançar o erro para ser tratado pelo chamador
-        throw error; 
-    } finally{
-        if (!cx && cxLocal) {
-            cxLocal.release(); // Liberar a conexão de volta ao pool
-        }
+        return { id: result.insertId, nome, email, tipo_usuario, data_criacao };
+    } finally {
+        cx.release();
     }
-}
+};
 
-
-export const consultarPorEmail = async (email, cx = null) => {
-    let cxLocal = cx;
-    if (!cxLocal) {
-        // Obter uma conexão do pool se não foi fornecida (se é null)
-        cxLocal = await pool.getConnection(); 
-    }
-
-    try {
-        // Query para consultar o usuário pelo email
-        const query = `SELECT * FROM Usuario WHERE email = ?`;
-
-        // Executar a query com o email fornecido
-        const [rows] = await cxLocal.query(query, [email]);
-        
-        // Verificar se algum usuário foi encontrado
-        if (rows.length === 0) {
-            return null; // Retornar null se nenhum usuário for encontrado
-        }
-        
-        // Retornar o primeiro usuário encontrado
-        return rows[0]; 
-    } catch (error) {
-        // Lançar o erro para ser tratado pelo chamador
-        throw error; 
-    } finally{
-        if (!cx && cxLocal) {
-            cxLocal.release(); // Liberar a conexão de volta ao pool
-        }
-    }
-}
-
-
-export const consultarPorId = async (id, cx=null) => {
-    let cxLocal = cx;
-    if (!cxLocal) {
-        // Obter uma conexão do pool se não foi fornecida (se é null)
-        cxLocal = await pool.getConnection(); 
-    }
-
-    try {
-        // Query para consultar o usuário por id
-        const query = `SELECT * FROM Usuario WHERE id = ?`;
-
-        // Executar a query com o email fornecido
-        const [rows] = await cxLocal.query(query, [id]);
-        
-        // Verificar se algum usuário foi encontrado
-        if (rows.length === 0) {
-            return null; // Retornar null se nenhum usuário for encontrado
-        }
-        
-        // Retornar o primeiro usuário encontrado
-        return rows[0]; 
-    } catch (error) {
-        // Lançar o erro para ser tratado pelo chamador
-        throw error; 
-    } finally{
-        if (!cx && cxLocal) {
-            cxLocal.release(); // Liberar a conexão de volta ao pool
-        }
-    }
-}
-
-export const login = async (email, senha) => {
-
+// Consultar por Email
+export const consultarPorEmail = async (email) => {
     const cx = await pool.getConnection();
     try {
-        const usuario = await consultarPorEmail(email, cx);
-
-        if (!usuario) {
-            throw new Error("Usuário ou senhas incorretos");
-        }
-
-        const senhaCorreta = bycrypt.compareSync(senha, usuario.senha);
-        if (!senhaCorreta) {
-            throw new Error("Usuário ou senhas incorretos");
-        }
-
-        usuario.senha = undefined;
-
-        return usuario;
-    } catch (error) {
-        // Lançar o erro para ser tratado pelo chamador
-        throw error; 
+        const [rows] = await cx.query(`SELECT * FROM usuario WHERE email = ?`, [email]);
+        return rows.length > 0 ? rows[0] : null;
     } finally {
-        if (cx) {
-            cx.release(); // Liberar a conexão de volta ao pool
-        }
+        cx.release();
     }
-}
+};
+
+// Consultar todos (com busca opcional)
+export const consultarTodos = async (search) => {
+    const cx = await pool.getConnection();
+    try {
+        let query = `SELECT id, nome, email, tipo_usuario, data_criacao FROM usuario`;
+        let params = [];
+
+        if (search) {
+            query += ` WHERE nome LIKE ? OR email LIKE ?`;
+            params.push(`%${search}%`, `%${search}%`);
+        }
+
+        const [rows] = await cx.query(query, params);
+        return rows;
+    } finally {
+        cx.release();
+    }
+};
+
+// Consultar por ID
+export const consultarPorId = async (id) => {
+    const cx = await pool.getConnection();
+    try {
+        const [rows] = await cx.query(`SELECT * FROM usuario WHERE id = ?`, [id]);
+        return rows.length > 0 ? rows[0] : null;
+    } finally {
+        cx.release();
+    }
+};
+
+// Login simples
+export const login = async (email, senha) => {
+    const cx = await pool.getConnection();
+    try {
+        const [rows] = await cx.query(`SELECT * FROM usuario WHERE email = ? AND senha = ?`, [email, senha]);
+        return rows.length > 0 ? rows[0] : null;
+    } finally {
+        cx.release();
+    }
+};
+
+// Alterar usuário
+export const alterar = async (id, dadosAtualizados) => {
+    const cx = await pool.getConnection();
+    try {
+        const { nome, email, senha, tipo_usuario } = dadosAtualizados;
+
+        const query = `
+            UPDATE usuario 
+            SET nome = ?, email = ?, senha = ?, tipo_usuario = ?
+            WHERE id = ?
+        `;
+        const [result] = await cx.query(query, [nome, email, senha, tipo_usuario, id]);
+        return result;
+    } finally {
+        cx.release();
+    }
+};
+
+// Deletar usuário
+export const deletarPorID = async (id) => {
+    const cx = await pool.getConnection();
+    try {
+        const [result] = await cx.query(`DELETE FROM usuario WHERE id = ?`, [id]);
+        return result;
+    } finally {
+        cx.release();
+    }
+};
