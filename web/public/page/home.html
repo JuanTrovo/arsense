@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Arsense - Detecção precisa para um ambiente de trabalho mais seguro">
+    <title>Home - Seja Bem-vindo! | Arsense</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="shortcut icon" href="../assets/img/Favicon.png" type="image/png">
+    <link rel="preload" href="../assets/img/vaso.png" as="image">
+</head>
+
+<style>
+    /* Desativa qualquer tipo de rolagem na página */
+    html,
+    body {
+        overflow: hidden !important;
+        /* Remove scroll vertical e horizontal */
+        height: 100% !important;
+        /* Garante que o body não ultrapasse a viewport */
+        width: 100% !important;
+        overscroll-behavior: none;
+        /* Bloqueia gestos de overscroll em mobile */
+        touch-action: none;
+        /* Bloqueia gestos de toque */
+        position: fixed;
+        /* Impede o movimento da página */
+    }
+
+    /* Remove overscroll para navegadores que suportam */
+    body {
+        -ms-overflow-style: none;
+        /* Internet Explorer 10+ */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, Opera */
+    }
+</style>
+
+<body class="home-page">
+    <div class="home-esconde">
+        <main class="home">
+            <div class="home__container">
+                <div class="home__content">
+                    <section class="home__info">
+                        <div class="home__branding">
+                            <img src="../assets/img/logo_arsense_azul.png" alt="ArSense" class="home__logo" width="200" height="80">
+                        </div>
+
+                        <h1 class="home__title">
+                            Segurança<br>
+                            que você pode confiar
+                        </h1>
+
+                        <p class="home__description">
+                            O ArSense é um sistema inteligente de detecção de gases nocivos e inflamáveis, desenvolvido para tornar ambientes de trabalho mais seguros e monitorados em tempo real.
+                        </p>
+
+                        <button class="home__cta" aria-label="Iniciar experiência com o ArSense" onclick="location.href = '/detectores.html'">
+                            Acessar sistema
+                        </button>
+                    </section>
+
+                    <figure class="home__visual">
+                        <img src="../assets/img/detector.png" alt="Representação de ambientes" class="home__device" width="600" height="600">
+                    </figure>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

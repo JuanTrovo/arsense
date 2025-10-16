@@ -1,7 +1,7 @@
-import express from 'express';
-import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
+import express from 'express';
+import cors from 'cors';
 
 // Importando as rotas
 import usuarioRoute from './routes/UsuarioRoutes.js';
@@ -21,34 +21,22 @@ app.get('/', (req, res) => {
         dominio_raiz: rootDomain,
         atualizacao: '05/09/2025 - 10:00',
         rotas: {
-            usuario: {
-                'POST - Cadastrar usuário': `${rootDomain}/api/usuario`,
-                'GET - Consultar todos os usuários': `${rootDomain}/api/usuario`,
-                'GET - Consultar por email': `${rootDomain}/api/usuario`,
-                'GET - Consultar usuário por ID': `${rootDomain}/api/usuario/:id`,
-                'PUT - Alterar usuário': `${rootDomain}/api/usuario/:id`,
-                'DELETE - Deletar usuário': `${rootDomain}/api/usuario/:id`,
-                'POST - Login usuário': `${rootDomain}/api/usuario/login`
-            }
-            // dispositivo: {
-            //     'POST - Cadastrar dispositivo': `${rootDomain}/api/dispositivo`,
-            //     'GET - Consultar todos os dispositivos': `${rootDomain}/api/dispositivo`,
-            //     'GET - Consultar dispositivo por ID': `${rootDomain}/api/dispositivo/:id`,
-            //     'PUT - Alterar dispositivo': `${rootDomain}/api/dispositivo/:id`,
-            //     'DELETE - Deletar dispositivo': `${rootDomain}/api/dispositivo/:id`
-            // },
-            // leitura: {
-            //     'POST - Registrar leitura': `${rootDomain}/api/leitura`,
-            //     'GET - Consultar todas as leituras': `${rootDomain}/api/leitura`,
-            //     'GET - Consultar leitura por ID': `${rootDomain}/api/leitura/:id`,
-            //     'GET - Leituras de um dispositivo': `${rootDomain}/api/leitura/dispositivo/:id_dispositivo`
+            'GET - teste': `${rootDomain}/api/teste`
+            // usuario: {
+            //     'POST - Cadastrar usuário': `${rootDomain}/api/usuario`,
+            //     'GET - Consultar todos os usuários': `${rootDomain}/api/usuario`,
+            //     'GET - Consultar por email': `${rootDomain}/api/usuario`,
+            //     'GET - Consultar usuário por ID': `${rootDomain}/api/usuario/:id`,
+            //     'PUT - Alterar usuário': `${rootDomain}/api/usuario/:id`,
+            //     'DELETE - Deletar usuário': `${rootDomain}/api/usuario/:id`,
+            //     'POST - Login usuário': `${rootDomain}/api/usuario/login`
             // }
         }
     });
 });
 
 // Configurando as rotas
-app.use('/api/usuario', usuarioRoute);
+//app.use('/usuario', usuarioRoute);
 // app.use('/api/dispositivo', dispositivoRoute);
 // app.use('/api/leitura', leituraRoute);
 

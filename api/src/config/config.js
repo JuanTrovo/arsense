@@ -1,9 +1,9 @@
-// *** Configuração do banco de dados ****
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Configuração de desenvolvimento
 const developmentConfig = {
-    host: "db",
+    host: "mysql_db", // Nome do serviço do Docker
     port: 3306,
     name: "bd_arsense",
     dialect: "mysql",
@@ -11,6 +11,7 @@ const developmentConfig = {
     password: "root"
 };
 
+// Configuração de produção
 const productionConfig = {
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT, 10),
@@ -20,4 +21,5 @@ const productionConfig = {
     password: process.env.DB_PASS
 };
 
-export const db = process.env.MODE_ENV === 'production' ? productionConfig : developmentConfig;
+// Seleção da configuração dependendo do ambiente
+export const db = process.env.NODE_ENV === 'production' ? productionConfig : developmentConfig;

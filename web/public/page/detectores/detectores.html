@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Detectores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="shortcut icon" href="../../assets/img/Favicon.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../components/menu/charts/detectorCharts.js"></script>
+    <script src="../../components/menu/charts/telacheiaCharts.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <div class="logout-detectores-esconder" id="WarningSemConta" style="display: none;">
+        <div class="logout-detectores-container">
+            <h1 class="logout-detectores-title">Opa, parece que você não está logado em nenhuma conta!</h1>
+            <p class="logout-detectores-subtitle">Você precisa estar logado para visualizar e cadastrar seus detectores.</p>
+
+            <div class="logout-detectores-caixa">
+                <div class="logout-detectores-code2">
+                    <div class="bola" style="background-color: #7AB317; margin-left: 10px;"></div>
+                    <div class="bola2" style="background-color: #F0971C;"></div>
+                    <div class="bola3" style="background-color: #C21B12;"></div>
+                </div>
+            </div>
+
+            <div class="logout-detectores-caixa">
+                <div class="logout-detectores-code">
+                    <img src="../../assets/img/noUser.png" alt="" class="logout-detectores-icon">
+                </div>
+            </div>
+
+            <p class="logout-detectores-message">
+                Faça login ou crie uma conta para cadastrar seus detectores e acompanhar os dados coletados.
+            </p>
+
+            <button class="logout-detectores-btn-login" id="btnRedirecionarLogin">Fazer login</button>
+            <button class="logout-detectores-btn-cadastro" id="btnRedirecionarCadastro">Se cadastrar</button>
+        </div>
+    </div>
+
+    <div class="detectores-grid" id="listaDetectores">
+        <!-- Detectores serão carregados aqui -->
+    </div>
+
+    <div class="detectores-btn-esconder">
+        <button class="detectores-btn-add" id="btnAbrirAdd"></button>
+    </div>
+
+    <!-- Modal ADD Detector -->
+    <div class="detectores-modal-add-esconder" id="modalAdd">
+        <div class="modal-overlay">
+            <div class="modal-detectores-add-container">
+                <button class="modal-close-add-btn" id="fecharAdd">
+                    <p><strong>X</strong></p>
+                </button>
+                <div class="modal-detectores-add-cabecalho">
+                    <div class="modal-detectores-cabecalho-add-content">
+                        <div class="modal-detectores-add-info-cabecalho">
+                            <h1 class="modal-detectores-add-titulo">Adicionar novo detector</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-detectores-add-conteudo">
+                    <div class="modal-detectores-add-pesquisa">
+                        <i class="bi bi-search" style="align-content: center; margin-right: 15px;"></i>
+                        <input type="text" class="modal-detectores-add-pesquisa-input" placeholder="Pesquisar...">
+                    </div>
+                    <div class="modal-detectores-add-rolagem">
+                        <div class="modal-detectores-add-centralizar" id="listaDetectoresAdd">
+                            <!-- detectores aparecerão aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes do Detector -->
+    <div class="modal-detectores-esconder" style="display: none;">
+
+        <div class="modal-detectores-esconder scrollview" id="detectorModal">
+            <div class="modal-overlay">
+                <div class="modal-detectores-container">
+                    <button class="modal-close-btn" id="modalCloseBtn">
+                        <p><strong>X</strong></p>
+                    </button>
+                    <div class="modal-detectores-cabecalho">
+                        <div class="modal-detectores-cabecalho-content">
+                            <img src="../../assets/img/Favicon.png" alt="Ícone do Detector"
+                                class="modal-detectores-icon-cabecalho" id="modalDetectorIcon">
+                            <div class="modal-detectores-info-cabecalho">
+                                <h1 class="modal-detectores-nome" id="modalDetectorName"></h1>
+                                <p class="modal-detectores-local" id="modalDetectorLocal"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-detectores-conteudo">
+                        <div class="modal-detectores-info">
+                            <h2 class="modal-detectores-info-titulo">Descrição</h2>
+                            <p class="modal-detectores-info-descricao" id="modalDescricao"></p>
+                        </div>
+
+                        <h2 class="modal-detectores-info-titulo">Informações</h2>
+
+                        <div class="modal-detectores-info-item">
+                            <h2 class="modal-detectores-info-titulo">Local de Instalação</h2>
+                            <p class="modal-detectores-info-descricao" id="modalLocal"></p>
+                        </div>
+                        <div class="modal-detectores-info-item">
+                            <h2 class="modal-detectores-info-titulo">Data de Cadastro</h2>
+                            <p class="modal-detectores-info-descricao" id="modalData"></p>
+                        </div>
+                        <div class="modal-detectores-info-item">
+                            <h2 class="modal-detectores-info-titulo">Status</h2>
+                            <p class="modal-detectores-info-descricao" id="modalStatus"></p>
+                        </div>
+
+                        <h2 class="modal-detectores-info-titulo">Gráficos</h2>
+
+                        <div class="modal-detectores-info-item">
+                            <h2 class="modal-detectores-info-titulo-grafico">Níveis de Gases</h2>
+                            <canvas id="graficoGases" width="400" height="200"></canvas>
+                        </div>
+
+                        <div class="modal-detectores-info-item">
+                            <h2 class="modal-detectores-info-titulo-grafico">Histórico de Alertas</h2>
+                            <canvas id="graficoAlertas" width="400" height="200"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="fullscreenChartContainer"
+            style="display: none; position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center;">
+            <canvas id="fullscreenChart" width="800" height="500"></canvas>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>

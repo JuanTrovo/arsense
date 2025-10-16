@@ -1,39 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Sistema de Segurança</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arsense</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="shortcut icon" href="assets/img/Favicon.png" type="png">
 </head>
+
 <body>
-  <header class="navbar">
-    <div class="logo">Arsense</div>
-  </header>
+    <header id="menu">
 
-  <main class="login-container">
-    <div class="login-card">
-      <h1>Bem-vindo</h1>
-      <p>Entre para acessar sua conta</p>
-      <form id="loginForm">
-        <input type="email" placeholder="E-mail" required>
+    </header>
 
-        <div class="password-field">
-          <input type="password" id="senha" placeholder="Senha" required>
-        <span class="toggle-password" onclick="togglePassword()">
-  <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#666">
-    <path d="M12 4.5C7 4.5 2.73 8.11 1 12c1.73 3.89 6 7.5 11 7.5s9.27-3.61 11-7.5c-1.73-3.89-6-7.5-11-7.5zm0 13a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0-9a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
-  </svg>
-</span>
+    <!-- Conteúdo principal -->
+    <main class="container-fluid py-4 overflow-auto" id="root">
+        <!-- Conteúdo será carregado aqui via JavaScript -->
+    </main>
 
-        </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+ 
+    <script type="module">
+        import { loadMenu } from '/components/menu/menu.js';
+        import { loadPage } from '/route.js';
 
-        <button type="submit">Entrar</button>
-        <p class="register-text">Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
-      </form>
-    </div>
-  </main>
+        loadMenu("menu");
+        // Incluido arquivo com base na navegação
+        loadPage((html_page)=> {
+            $('#root').html(html_page);
+        });
 
-  <script src="script.js"></script>
+
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
+
 </html>
