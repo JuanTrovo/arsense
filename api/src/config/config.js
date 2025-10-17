@@ -3,12 +3,12 @@ dotenv.config();
 
 // Configuração de desenvolvimento
 const developmentConfig = {
-    host: "mysql_db", // Nome do serviço do Docker
+    host: "db", // Nome do serviço do Docker
     port: 3306,
     name: "bd_arsense",
     dialect: "mysql",
-    user: "root",
-    password: "root"
+    user: "arsense_user",
+    password: "arsense_password"
 };
 
 // Configuração de produção

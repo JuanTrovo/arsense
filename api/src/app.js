@@ -36,8 +36,8 @@ app.get('/', (req, res) => {
 });
 
 // Configurando as rotas
-//app.use('/usuario', usuarioRoute);
-// app.use('/api/dispositivo', dispositivoRoute);
+app.use('/', usuarioRoute);
+// app.use('/', dispositivoRoutes);
 // app.use('/api/leitura', leituraRoute);
 
 const PORT = process.env.PORT || 3000;

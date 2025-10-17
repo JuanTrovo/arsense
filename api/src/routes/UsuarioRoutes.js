@@ -4,24 +4,25 @@ import * as UsuarioController from "../controllers/UsuarioController.js";
 const router = Router();
 
 // Rota para cadastrar usuário
-router.post("/cadastrar", UsuarioController.cadastrar);
+router.post("/usuario", UsuarioController.cadastrar);
 
 // // Rota para consultar todos os usuários (pode usar ?search=nome/email)
-// router.get("/todos", UsuarioController.consultarTodos);
+router.get("/usuarios", UsuarioController.consultarTodos);
 
 // // Rota para consultar usuário por Email
-// router.get("/email", UsuarioController.consultarPorEmail);
+router.get("/email", UsuarioController.consultarPorEmail);
 
 // // Rota para consultar usuário por ID
-// router.get("/:id", UsuarioController.consultarPorId);
-
-// // Rota para alterar usuário
-// router.put("/:id", UsuarioController.alterar);
-
-// // Rota para deletar usuário
-// router.delete("/:id", UsuarioController.deletarPorID);
+router.get("/usuario/:id", UsuarioController.consultarPorId);
 
 // // Rota para login
-// router.post("/login", UsuarioController.login);
+router.post("/usuario/login", UsuarioController.login);
+
+// // Rota para alterar usuário
+router.patch("/usuario/:id", UsuarioController.alterar);
+
+// // Rota para deletar usuário
+router.delete("/usuario/:id", UsuarioController.deletarPorID);
+
 
 export default router;
